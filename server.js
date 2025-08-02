@@ -163,10 +163,13 @@ server.post("/api/order", async function createOrder(req, res) {
   const { cart } = req.body;
 
   const now = new Date();
-  // forgive me Date gods, for I have sinned
-  const time = now.toLocaleTimeString("pt-BR", { hour12: false });
-  const [year, month, day] = now.toISOString().split("T")[0].split("-");
-  const date = `${day}/${month}/${year}`;
+  const time = now.toLocaleTimeString("pt-BR", {
+    hour12: false,
+    timeZone: "America/Sao_Paulo",
+  });
+  const date = now.toLocaleDateString("pt-BR", {
+    timeZone: "America/Sao_Paulo",
+  });
 
   if (!cart || !Array.isArray(cart) || cart.length === 0) {
     res.status(400).send({ error: "Invalid order data" });
